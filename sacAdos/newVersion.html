@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SNOW STORE - Votre Boutique E-commerce</title>
+
+    <!-- Polices Google -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #0ea5e9;         /* Bleu ciel moderne */
+            --secondary-color: #1e293b;       /* Bleu-gris foncé */
+            --accent-color: #ec4899;          /* Rose vif */
+            --pink-accent: #f472b6;           /* Rose doux */
+            --light-bg: #fef7ff;              /* Fond très clair avec nuance rose */
+            --card-bg: #ffffff;               /* Cartes blanches */
+            --text-color: #334155;            /* Texte moderne */
+            --hover-effect: 0 10px 25px rgba(236, 72, 153, 0.15);
+            --pattern-color: rgba(14, 165, 233, 0.08);
+            --gradient-1: #0ea5e9;
+            --gradient-2: #8b5cf6;
+            --gradient-3: #ec4899;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #f0f9ff 0%, #fdf2f8 50%, #fef7ff 100%);
+            color: var(--text-color);
+            line-height: 1.6;
+            position: relative;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                    radial-gradient(circle at 20% 30%, var(--pattern-color) 0%, transparent 25%),
+                    radial-gradient(circle at 70% 80%, var(--pattern-color) 0%, transparent 30%),
+                    radial-gradient(circle at 85% 15%, var(--pattern-color) 0%, transparent 20%),
+                    repeating-linear-gradient(45deg, rgba(14, 165, 233, 0.04) 0px, rgba(14, 165, 233, 0.04) 2px, transparent 2px, transparent 12px),
+                    repeating-linear-gradient(-45deg, rgba(236, 72, 153, 0.04) 0px, rgba(236, 72, 153, 0.04) 2px, transparent 2px, transparent 12px);
+            background-size: 400px 400px, 500px 500px, 300px 300px, 24px 24px, 24px 24px;
+            z-index: -1;
+        }
+
+        body::after {
+            content: "🎒❄️💖⚡🎯🔥💫⭐🚀✨🎒❄️💖⚡🎯🔥💫⭐";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            font-size: 28px;
+            opacity: 0.04;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+            animation: snowfall 25s linear infinite;
+        }
+
+        @keyframes snowfall {
+            0% { transform: translateY(-100vh) rotate(0deg); }
+            100% { transform: translateY(100vh) rotate(360deg); }
+        }
+
+        /* Menu Navigation */
+        nav {
+            background: rgba(30, 41, 59, 0.95);
+            backdrop-filter: blur(12px);
+            padding: 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            align-items: center;
+        }
+
+        .nav-item {
+            margin: 0;
+        }
+
+        .nav-link {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 18px 24px;
+            font-weight: 500;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-color), var(--primary-color));
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-link:hover {
+            background-color: rgba(14, 165, 233, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .nav-link:hover::before {
+            width: 80%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--gradient-1) 0%, var(--gradient-2) 50%, var(--gradient-3) 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            animation: fadeIn 1s ease-out forwards;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            position: relative;
+            z-index: 2;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 48px;
+            animation: rotate 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(-5deg) scale(1); }
+            100% { transform: rotate(5deg) scale(1.1); }
+        }
+
+        .site-title {
+            font-size: 42px;
+            font-weight: 800;
+            margin: 0;
+            font-family: 'Space Grotesk', sans-serif;
+            text-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            letter-spacing: -1px;
+        }
+
+        .site-subtitle {
+            font-size: 18px;
+            font-weight: 400;
+            margin-top: 8px;
+            opacity: 0.9;
+        }
+
+        header::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0) 100%);
+        }
+
+        .decoration {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .decoration::before,
+        .decoration::after {
+            content: "❄️⚡💎🚀💫⭐🎯🔥";
+            position: absolute;
+            font-size: 32px;
+            opacity: 0.15;
+            white-space: nowrap;
+            animation: float 22s linear infinite;
+        }
+
+        .decoration::before {
+            top: -30px;
+            left: 0;
+            animation-duration: 28s;
+        }
+
+        .decoration::after {
+            bottom: -30px;
+            right: 0;
+            animation-direction: reverse;
+            animation-duration: 35s;
+        }
+
+        @keyframes float {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .promo-banner {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--pink-accent) 100%);
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin: 30px auto;
+            max-width: 1400px;
+            border-radius: 16px;
+            font-weight: 600;
+            font-size: 18px;
+            box-shadow: 0 8px 25px rgba(236, 72, 153, 0.3);
+            animation: pulse 2.5s infinite;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .promo-banner::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(255,255,255,0.1), transparent);
+            animation: spin 4s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+            100% { transform: scale(1); }
+        }
+
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            padding: 50px;
+            max-width: 1400px;
+            margin: 40px auto;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            text-align: center;
+            text-decoration: none;
+            color: var(--text-color);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            border: 1px solid rgba(14, 165, 233, 0.1);
+            animation: cardEntrance 0.8s ease-out;
+            animation-fill-mode: backwards;
+        }
+
+        .card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: var(--hover-effect);
+            border-color: var(--primary-color);
+        }
+
+        .card img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .card:hover img {
+            transform: scale(1.08);
+        }
+
+        .card-title {
+            padding: 24px 20px;
+            font-size: 20px;
+            font-weight: 600;
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: var(--card-bg);
+            border-top: 1px solid rgba(14, 165, 233, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover .card-title {
+            background-color: #fdf2f8;
+            color: var(--accent-color);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(14,165,233,0) 0%, rgba(236,72,153,0.2) 50%, rgba(244,114,182,0) 100%);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+            z-index: 1;
+        }
+
+        .card:hover::before {
+            transform: translateX(100%);
+        }
+
+        .badge {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: linear-gradient(135deg, var(--accent-color), var(--pink-accent));
+            color: white;
+            font-size: 13px;
+            font-weight: 700;
+            padding: 8px 14px;
+            border-radius: 25px;
+            z-index: 2;
+            box-shadow: 0 4px 12px rgba(236, 72, 153, 0.4);
+            animation: badgePulse 2s infinite;
+        }
+
+        @keyframes badgePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @media (max-width: 900px) {
+            .categories {
+                grid-template-columns: repeat(2, 1fr);
+                padding: 40px 30px;
+                gap: 25px;
+            }
+
+            .nav-menu {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .site-title {
+                font-size: 32px;
+            }
+
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .categories {
+                grid-template-columns: 1fr;
+                padding: 30px 20px;
+                gap: 20px;
+            }
+
+            .card img {
+                height: 240px;
+            }
+
+            .site-title {
+                font-size: 28px;
+            }
+
+            .logo {
+                font-size: 36px;
+            }
+
+            .promo-banner {
+                margin: 20px;
+                font-size: 16px;
+                padding: 16px;
+            }
+
+            .nav-container {
+                padding: 0 15px;
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes cardEntrance {
+            from { opacity: 0; transform: translateY(20px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .card:nth-child(1) { animation-delay: 0.1s; }
+        .card:nth-child(2) { animation-delay: 0.2s; }
+        .card:nth-child(3) { animation-delay: 0.3s; }
+        .card:nth-child(4) { animation-delay: 0.4s; }
+        .card:nth-child(5) { animation-delay: 0.5s; }
+        .card:nth-child(6) { animation-delay: 0.6s; }
+        .card:nth-child(7) { animation-delay: 0.7s; }
+        .card:nth-child(8) { animation-delay: 0.8s; }
+        .card:nth-child(9) { animation-delay: 0.9s; }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="nav-container">
+        <div class="nav-brand">
+            <span style="font-size: 24px; font-weight: 700; color: white; font-family: 'Space Grotesk', sans-serif;">
+                ❄️ SNOW STORE
+            </span>
+        </div>
+        <ul class="nav-menu">
+            <li class="nav-item"><a href="#accueil" class="nav-link">🏠 Accueil</a></li>
+            <li class="nav-item"><a href="#produits" class="nav-link">🛍️ Produits</a></li>
+            <li class="nav-item"><a href="#nouveautes" class="nav-link">⭐ Nouveautés</a></li>
+            <li class="nav-item"><a href="#promotions" class="nav-link">🔥 Promotions</a></li>
+            <li class="nav-item"><a href="#contact" class="nav-link">📞 Contact</a></li>
+            <li class="nav-item"><a href="#panier" class="nav-link">🛒 Panier</a></li>
+        </ul>
+        <button class="mobile-menu-btn">☰</button>
+    </div>
+</nav>
+
+<header>
+    <div class="decoration"></div>
+    <div class="header-content">
+        <div class="logo">❄️</div>
+        <div>
+            <h1 class="site-title">SNOW STORE</h1>
+            <p class="site-subtitle">Sacs à dos personnalisés & collections uniques</p>
+        </div>
+    </div>
+</header>
+
+<div class="promo-banner">
+    <div style="position: relative; z-index: 1;">
+        🎯 COLLECTION RENTRÉE : -20% sur tous les sacs à dos ! Livraison gratuite dès 50€ 🚀
+    </div>
+</div>
+
+<div class="categories">
+    <a href="naruto.html" class="card">
+        <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400&h=280&fit=crop&crop=center" alt="Sacs Naruto" />
+        <div class="badge">Nouveau</div>
+        <div class="card-title">🎒 Naruto</div>
+    </a>
+    <a href="onepiece.html" class="card">
+        <img src="https://images.unsplash.com/photo-1581605405669-fcdf81163c85?w=400&h=280&fit=crop&crop=center" alt="Sacs One Piece" />
+        <div class="card-title">⚓ One Piece</div>
+    </a>
+    <a href="dbz.html" class="card">
+        <img src="https://images.unsplash.com/photo-1622560480654-d96214fdc887?w=400&h=280&fit=crop&crop=center" alt="Sacs Dragon Ball Z" />
+        <div class="badge">Populaire</div>
+        <div class="card-title">🐉 Dragon Ball Z</div>
+    </a>
+    <a href="aot.html" class="card">
+        <img src="https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?w=400&h=280&fit=crop&crop=center" alt="Sacs Attack on Titan" />
+        <div class="card-title">⚔️ Attack on Titan</div>
+    </a>
+    <a href="demonslayer.html" class="card">
+        <img src="https://images.unsplash.com/photo-1566479179817-c0b9b98b6afc?w=400&h=280&fit=crop&crop=center" alt="Sacs Demon Slayer" />
+        <div class="card-title">👹 Demon Slayer</div>
+    </a>
+    <a href="jujutsu.html" class="card">
+        <img src="https://images.unsplash.com/photo-1582719508461-905c673771fd?w=400&h=280&fit=crop&crop=center" alt="Sacs Jujutsu Kaisen" />
+        <div class="badge">Tendance</div>
+        <div class="card-title">🔮 Jujutsu Kaisen</div>
+    </a>
+    <a href="autre.html" class="card">
+        <img src="https://images.unsplash.com/photo-1562051958-a31e31ac286d?w=400&h=280&fit=crop&crop=center" alt="Autres modèles" />
+        <div class="card-title">🌟 Autres modèles</div>
+    </a>
+    <a href="fille.html" class="card">
+        <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400&h=280&fit=crop&crop=center" alt="Sacs pour filles" />
+        <div class="card-title">👧 Collection Filles</div>
+    </a>
+    <a href="garcon.html" class="card">
+        <img src="https://images.unsplash.com/photo-1581605405669-fcdf81163c85?w=400&h=280&fit=crop&crop=center" alt="Sacs pour garçons" />
+        <div class="card-title">👦 Collection Garçons</div>
+    </a>
+</div>
+
+<script>
+    // Menu mobile toggle (fonctionnalité basique)
+    document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+        const menu = document.querySelector('.nav-menu');
+        if (menu.style.display === 'flex') {
+            menu.style.display = 'none';
+        } else {
+            menu.style.display = 'flex';
+            menu.style.flexDirection = 'column';
+            menu.style.position = 'absolute';
+            menu.style.top = '100%';
+            menu.style.left = '0';
+            menu.style.right = '0';
+            menu.style.backgroundColor = 'rgba(30, 41, 59, 0.98)';
+            menu.style.backdropFilter = 'blur(12px)';
+        }
+    });
+</script>
+
+</body>
+</html>

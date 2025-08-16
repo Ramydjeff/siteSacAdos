@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sacs Garçon - Sacs à Dos DZ (Catalogue Amélioré)</title>
+  <style>
+    :root {
+      --primary: #0f1115;
+      --secondary: #3b82f6;
+      --bg-overlay: rgba(0, 0, 0, 0.75);
+      --card: #171923;
+      --muted: #a0aec0;
+      --text: #f7fafc;
+      --ring: 0 0 0 3px rgba(59, 130, 246, 0.35);
+    }
+
+    /* ======= Base ======= */
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--text);
+      background: url('images/garcon.jpg') no-repeat center center / cover fixed;
+    }
+
+    .overlay {
+      background: linear-gradient(180deg, rgba(0,0,0,0.65), rgba(0,0,0,0.85));
+      min-height: 100vh;
+      padding: 16px;
+    }
+
+    /* ======= Layout ======= */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 20px;
+    }
+
+    header.site-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(20, 22, 30, 0.85);
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 14px 10px;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .logo {
+      width: 36px; height: 36px; border-radius: 8px;
+      background: var(--secondary);
+      display: grid; place-items: center; font-weight: 800; color: #111;
+    }
+    .brand h1 { font-size: 1.1rem; margin: 0; }
+
+    .breadcrumbs { color: var(--muted); font-size: .9rem; }
+    .breadcrumbs a { color: #fff; text-decoration: none; opacity: .9; }
+    .breadcrumbs a:hover { text-decoration: underline; }
+
+    .actions { display: flex; gap: 10px; align-items: center; }
+    .back-btn, .cart-btn {
+      padding: 10px 14px; border-radius: 999px; border: 1px solid rgba(255,255,255,.2);
+      background: transparent; color: #fff; text-decoration: none; display: inline-flex; gap: 8px; align-items: center;
+    }
+    .back-btn:hover, .cart-btn:hover { background: rgba(255,255,255,.08); }
+
+    /* ======= Sidebar Filters ======= */
+    aside.filters {
+      background: rgba(15, 17, 23, 0.85);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 16px;
+      padding: 16px;
+      height: fit-content;
+      position: sticky; top: 86px;
+    }
+    .filters h2 { margin: 6px 0 12px; font-size: 1rem; opacity: .95; }
+    .section { border-top: 1px dashed rgba(255,255,255,.12); padding-top: 12px; margin-top: 12px; }
+    .section:first-of-type { border-top: 0; padding-top: 0; margin-top: 0; }
+
+    .searchbar { display:flex; gap:8px; }
+    .searchbar input {
+      width: 100%; padding: 10px 12px; border-radius: 12px; border: 1px solid rgba(255,255,255,.12);
+      background: #10131a; color: #fff;
+    }
+
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip {
+      border: 1px solid rgba(255,255,255,.15); border-radius: 999px; padding: 6px 10px; font-size: .85rem; cursor: pointer;
+      user-select: none; background: #0e121a;
+    }
+    .chip.active { border-color: var(--secondary); box-shadow: var(--ring); }
+
+    .range-wrap { display:flex; align-items:center; gap:10px; }
+    .range-wrap input[type=range] { width: 100%; }
+    .range-value { font-variant-numeric: tabular-nums; color:#fff; padding:4px 8px; border-radius: 8px; background:#0f1320; }
+
+    .sort-select { width:100%; padding:10px 12px; border-radius:12px; border:1px solid rgba(255,255,255,.12); background:#10131a; color:#fff; }
+
+    /* ======= Catalog Grid ======= */
+    main.catalog {
+      background: rgba(15, 17, 23, 0.6);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 16px;
+      padding: 16px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: transform .25s ease, box-shadow .25s ease;
+      position: relative;
+      isolation: isolate;
+    }
+    .card:hover { transform: translateY(-4px); box-shadow: 0 10px 30px rgba(0,0,0,.35); }
+
+    .badge { position:absolute; top:10px; left:10px; background: var(--secondary); color:#111; padding:6px 10px; border-radius:999px; font-weight:700; font-size:.75rem; }
+
+    .thumb { aspect-ratio: 4/3; width:100%; object-fit: cover; display:block; }
+
+    .card-body { padding: 12px; display:grid; gap: 6px; }
+    .title { margin: 0; font-size: 1rem; line-height: 1.2; }
+    .meta { font-size: .85rem; color: var(--muted); }
+    .price { color: var(--secondary); font-weight: 800; letter-spacing:.3px; }
+
+    .row { display:flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+
+    .btn {
+      display:inline-flex; align-items:center; gap:8px; justify-content:center; text-decoration:none; cursor:pointer;
+      border: 1px solid rgba(255,255,255,.15); color:#fff; background: #0f1320; padding: 8px 12px; border-radius: 10px; font-weight: 600;
+    }
+    .btn.primary { background: var(--secondary); border-color: transparent; color:#111; }
+    .btn:hover { filter: brightness(1.08); }
+
+    .empty { padding: 32px; text-align: center; color: var(--muted); }
+
+    /* ======= Modal ======= */
+    .modal {
+      position: fixed; inset: 0; display: none; place-items: center; background: rgba(0,0,0,.65); z-index: 100;
+      padding: 16px;
+    }
+    .modal.show { display:grid; }
+    .dialog {
+      width: min(920px, 96vw); background: #0f1118; border:1px solid rgba(255,255,255,.08); border-radius: 16px; overflow: hidden;
+      display: grid; grid-template-columns: 1.2fr 1fr; min-height: 420px;
+    }
+    .dialog .media { background: #0b0d13; display:grid; place-items:center; }
+    .dialog .media img { width:100%; height:100%; object-fit: cover; }
+    .dialog .content { padding: 16px; display:grid; gap: 10px; }
+    .dialog h3 { margin: 0; }
+    .guide { background:#0b0f1a; border:1px solid rgba(255,255,255,.06); border-radius: 12px; padding: 10px; }
+
+    .close-x { position:absolute; top: 10px; right: 10px; background: #0f1320; border:1px solid rgba(255,255,255,.15); width:36px; height:36px; border-radius: 10px; display:grid; place-items:center; cursor:pointer; }
+
+    /* ======= Responsive ======= */
+    @media (max-width: 980px) {
+      .container { grid-template-columns: 1fr; }
+      aside.filters { position: static; order: 2; }
+      main.catalog { order: 1; }
+    }
+    @media (max-width: 740px) {
+      .header-inner { grid-template-columns: 1fr; gap: 8px; }
+      .dialog { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<div class="overlay">
+  <!-- ======= HEADER ======= -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand">
+        <div class="logo">GAR</div>
+        <div>
+          <h1>Sacs pour Garçons</h1>
+          <nav class="breadcrumbs">
+            <a href="pc.html">Boutique</a> / <span>Garçons</span>
+          </nav>
+        </div>
+      </div>
+      <div></div>
+      <div class="actions">
+        <a class="back-btn" href="pc.html">&larr; Retour</a>
+        <a class="cart-btn" href="#">Panier (0)</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ======= BODY GRID ======= -->
+  <div class="container">
+    <!-- ======= FILTERS ======= -->
+    <aside class="filters">
+      <h2>Filtrer & Trier</h2>
+      <div class="section">
+        <div class="searchbar">
+          <input id="search" type="search" placeholder="Rechercher un modèle" />
+        </div>
+      </div>
+      <div class="section">
+        <h3>Styles</h3>
+        <div class="chips" id="chipTags">
+          <span class="chip" data-tag="sport">Sport</span>
+          <span class="chip" data-tag="ecole">École</span>
+          <span class="chip" data-tag="urbain">Urbain</span>
+          <span class="chip" data-tag="gaming">Gaming</span>
+          <span class="chip" data-tag="classique">Classique</span>
+        </div>
+      </div>
+      <div class="section">
+        <h3>Budget (DA)</h3>
+        <div class="range-wrap">
+          <input id="priceRange" type="range" min="2400" max="4000" step="50" value="4000" />
+          <span class="range-value" id="priceOut">≤ 4000</span>
+        </div>
+      </div>
+      <div class="section">
+        <h3>Trier par</h3>
+        <select id="sort" class="sort-select">
+          <option value="pop">Recommandés</option>
+          <option value="price-asc">Prix croissant</option>
+          <option value="price-desc">Prix décroissant</option>
+          <option value="name">Nom (A→Z)</option>
+        </select>
+      </div>
+    </aside>
+
+    <!-- ======= CATALOG ======= -->
+    <main class="catalog">
+      <div class="grid" id="grid">
+        <!-- 8 modèles garçons -->
+        <article class="card" data-name="Sac Sport Bleu" data-price="2600" data-tags="sport,ecole">
+          <span class="badge">Nouveau</span>
+          <img class="thumb" src="images/garcon1.jpg" alt="Sac Sport Bleu" />
+          <div class="card-body">
+            <h3 class="title">Sac Sport Bleu</h3>
+            <div class="meta">20L • Résistant</div>
+            <div class="row"><span class="price">2600 DA</span></div>
+            <div class="row">
+              <a class="btn primary" href="#">Commander</a>
+              <button class="btn quick" data-img="images/garcon1.jpg" data-title="Sac Sport Bleu" data-price="2600">Aperçu</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="card" data-name="Sac Urbain Noir" data-price="2800" data-tags="urbain,classique">
+          <img class="thumb" src="images/garcon2.jpg" alt="Sac Urbain Noir" />
+          <div class="card-body">
+            <h3 class="title">Sac Urbain Noir</h3>
+            <div class="meta">22L • Étanche</div>
+            <div class="row"><span class="price">2800 DA</span></div>
+            <div class="row">
+              <a class="btn primary" href="#">Commander</a>
+              <button class="btn quick" data-img="images/garcon2.jpg" data-title="Sac Urbain Noir" data-price="2800">Aperçu</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="card" data-name="Sac École Classique" data-price="2400" data-tags="ecole,classique">
+          <img class="thumb" src="images/garcon3.jpg" alt="Sac École Classique" />
+          <div class="card-body">
+            <h3 class="title">Sac École Classique</h3>
+            <div class="meta">18L • Léger</div>
+            <div class="row"><span class="price">2400 DA</span></div>
+            <div class="row">
+              <a class="btn primary" href="#">Commander</a>
+              <button class="btn quick" data-img="images/garcon3.jpg" data-title="Sac École Classique" data-price="2400">Aperçu</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="card" data-name="Sac Gaming LED" data-price="3500" data-tags="gaming,urbain">
+          <img class="thumb" src="images/garcon4.jpg" alt="Sac Gaming LED" />
+          <div class="card-body">
+            <h3 class="title">Sac Gaming LED</h3>
+            <div class="meta">25L • Avec USB</div>
+            <div class="row"><span class="price">3500 DA</span></div>
+            <div class="row">
+              <a class="btn primary" href="#">Commander</a>
+              <button class="btn quick" data-img="images/garcon4.jpg" data-title="Sac Gaming LED" data-price="3500">Aperçu</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="card" data-name="Sac Urbain Gris" data-price="3000" data-tags="urbain">
+          <img class="thumb" src="images/garcon5.jpg" alt="Sac Urbain Gris" />
+          <div class="card-body">
+            <h3 class="title">Sac Urbain Gris</h3>
+            <div class="meta">23L • Moderne</div>
+            <div class="row"><span class="price">3000 DA</span></div>
+            <div class="row">
+              <a class="btn primary" href="#">Commander</a>
+              <button class="btn quick" data-img="images/garcon5.jpg" data-title="Sac Urbain Gris" data-price="3000">Aperçu</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="card" data-name="Sac Sport Rouge" data-price="2700" data-tags="sport">
+          <img class="thumb" src="images/garcon6.jpg" alt="Sac Sport Rouge" />
+          <div class="card-body">
+            <h3 class="title">Sac Sport Rouge</h3>
+            <div class="meta">21L • Résistant</div>
+            <div class="row"><span class="price">2700 DA</span></div>
+            <div class="row">
+              <a class="btn primary" href="#">Commander</a>
+              <button class="btn quick" data-img="images/garcon6.jpg" data-title="Sac Sport Rouge" data-price="2700">Aperçu</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="card" data-name="Sac Classique Bleu" data-price="2500" data-tags="classique,ecole">
+          <img class="thumb" src="images/garcon7.jpg" alt="Sac Classique Bleu" />
+          <div class="card-body">
+            <h3 class="title">Sac Classique Bleu</h3>
+            <div class="meta">19L • Confortable</div>
+            <div class="row"><span class="price">2500 DA</span></div>
+            <div class="row">
+              <a class="btn primary" href="#">Commander</a>
+              <button class="btn quick" data-img="images/garcon7.jpg" data-title="Sac Classique Bleu" data-price="2500">Aperçu</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="card" data-name="Sac Urbain Camo" data-price="3200" data-tags="urbain">
+          <img class="thumb" src="images/garcon8.jpg" alt="Sac Urbain Camo" />
+          <div class="card-body">
+            <h3 class="title">Sac Urbain Camo</h3>
+            <div class="meta">24L • Style camouflage</div>
+            <div class="row"><span class="price">3200 DA</span></div>
+            <div class="row">
+              <a class="btn primary" href="#">Commander</a>
+              <button class="btn quick" data-img="images/garcon8.jpg" data-title="Sac Urbain Camo" data-price="3200">Aperçu</button>
+            </div>
+          </div>
+        </article>
+      </div>
+    </main>
+  </div>
+
+  <!-- ======= MODAL ======= -->
+  <div class="modal" id="modal">
+    <div class="dialog">
+      <div class="media"><img id="modalImg" src="" alt="" /></div>
+      <div class="content">
+        <h3 id="modalTitle"></h3>
+        <div id="modalPrice" class="price"></div>
+        <div class="guide">
+          <p>Ce sac est parfait pour l’école, le sport ou les sorties urbaines. Conçu pour être résistant et confortable.</p>
+          <ul>
+            <li>Capacité : 18–25L</li>
+            <li>Matière : Polyester résistant</li>
+            <li>Confort : Bretelles rembourrées</li>
+            <li>Extras : Poches multiples</li>
+          </ul>
+        </div>
+        <div class="row">
+          <a class="btn primary" href="#">Commander</a>
+          <button class="btn" onclick="closeModal()">Fermer</button>
+        </div>
+      </div>
+      <button class="close-x" onclick="closeModal()">✕</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const search = document.getElementById('search');
+  const priceRange = document.getElementById('priceRange');
+  const priceOut = document.getElementById('priceOut');
+  const sort = document.getElementById('sort');
+  const grid = document.getElementById('grid');
+  const chips = document.querySelectorAll('.chip');
+
+  function filterCards() {
+    const term = search.value.toLowerCase();
+    const maxPrice = parseInt(priceRange.value);
+    const activeTags = Array.from(chips).filter(c => c.classList.contains('active')).map(c => c.dataset.tag);
+    const cards = grid.querySelectorAll('.card');
+
+    let visibleCount = 0;
+    cards.forEach(card => {
+      const name = card.dataset.name.toLowerCase();
+      const price = parseInt(card.dataset.price);
+      const tags = card.dataset.tags.split(',');
+      const matchesTerm = name.includes(term);
+      const matchesPrice = price <= maxPrice;
+      const matchesTags = activeTags.length === 0 || activeTags.some(t => tags.includes(t));
+
+      if (matchesTerm && matchesPrice && matchesTags) {
+        card.style.display = '';
+        visibleCount++;
+      } else {
+        card.style.display = 'none';
+      }
+    });
+
+    if (visibleCount === 0) {
+      if (!document.querySelector('.empty')) {
+        const div = document.createElement('div');
+        div.className = 'empty';
+        div.textContent = 'Aucun sac trouvé';
+        grid.appendChild(div);
+      }
+    } else {
+      const empty = document.querySelector('.empty');
+      if (empty) empty.remove();
+    }
+  }
+
+  function sortCards() {
+    const cards = Array.from(grid.querySelectorAll('.card')).filter(c => c.style.display !== 'none');
+    let sorted = [...cards];
+    switch (sort.value) {
+      case 'price-asc':
+        sorted.sort((a,b)=>a.dataset.price - b.dataset.price);
+        break;
+      case 'price-desc':
+        sorted.sort((a,b)=>b.dataset.price - a.dataset.price);
+        break;
+      case 'name':
+        sorted.sort((a,b)=>a.dataset.name.localeCompare(b.dataset.name));
+        break;
+      default: break;
+    }
+    sorted.forEach(c=>grid.appendChild(c));
+  }
+
+  search.addEventListener('input', ()=>{filterCards(); sortCards();});
+  priceRange.addEventListener('input', ()=>{priceOut.textContent = '≤ '+priceRange.value; filterCards(); sortCards();});
+  sort.addEventListener('change', sortCards);
+  chips.forEach(chip=>chip.addEventListener('click', ()=>{chip.classList.toggle('active'); filterCards(); sortCards();}));
+
+  // ======= Modal =======
+  const modal = document.getElementById('modal');
+  const modalImg = document.getElementById('modalImg');
+  const modalTitle = document.getElementById('modalTitle');
+  const modalPrice = document.getElementById('modalPrice');
+
+  document.querySelectorAll('.quick').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      modal.classList.add('show');
+      modalImg.src = btn.dataset.img;
+      modalTitle.textContent = btn.dataset.title;
+      modalPrice.textContent = btn.dataset.price+' DA';
+    });
+  });
+  function closeModal(){ modal.classList.remove('show'); }
+</script>
+</body>
+</html>
