@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sacs Demon Slayer - Sacs à Dos DZ</title>
+
+  <!-- Polices Google -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --primary-color: #6c63ff;   /* Bleu doux */
+      --secondary-color: #d90429; /* Rouge vif */
+      --accent-color: #ff6584;
+      --light-bg: #f5f7fa;
+      --card-bg: #1c1c1c;
+      --text-light: #fff;
+      --text-color: #2d3748;
+      --hover-effect: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: url('images/demon.jpeg') no-repeat center center/cover;
+      color: var(--text-light);
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Overlay fondu sombre */
+    .overlay {
+      background-color: rgba(0,0,0,0.85);
+      min-height: 100vh;
+      padding: 90px 20px 40px; /* 90px pour header fixe */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* HEADER FIXE */
+    header {
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+      color: white;
+      padding: 20px 15px;
+      text-align: center;
+      font-size: 28px;
+      font-weight: 600;
+      font-family: 'Fredoka', cursive;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      user-select: none;
+    }
+
+    /* BOUTON CATEGORIES */
+    .btn-categories {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background-color: var(--accent-color);
+      border: none;
+      border-radius: 30px;
+      padding: 10px 18px;
+      font-weight: 600;
+      color: white;
+      cursor: pointer;
+      font-family: 'Poppins', sans-serif;
+      z-index: 1100;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+      transition: background-color 0.3s ease;
+    }
+    .btn-categories:hover,
+    .btn-categories:focus {
+      background-color: #ff3b6f;
+      outline: none;
+    }
+
+    /* PANNEAU LATERAL CATEGORIES */
+    #side-drawer {
+      position: fixed;
+      top: 0;
+      left: -280px;
+      width: 280px;
+      height: 100%;
+      background: var(--card-bg);
+      box-shadow: 2px 0 15px rgba(0,0,0,0.5);
+      padding: 20px;
+      transition: left 0.3s ease;
+      z-index: 1200;
+      overflow-y: auto;
+      color: #333;
+    }
+    #side-drawer.active {
+      left: 0;
+    }
+    #side-drawer h2 {
+      margin-top: 0;
+      font-family: 'Fredoka', cursive;
+      font-weight: 700;
+      font-size: 24px;
+      margin-bottom: 15px;
+      color: var(--primary-color);
+    }
+    #side-drawer input[type="search"] {
+      width: 100%;
+      padding: 8px 12px;
+      margin-bottom: 15px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+      font-family: 'Poppins', sans-serif;
+    }
+    #side-drawer ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    #side-drawer li {
+      margin-bottom: 12px;
+    }
+    #side-drawer a {
+      color: var(--text-color);
+      text-decoration: none;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: color 0.3s;
+    }
+    #side-drawer a:hover,
+    #side-drawer a:focus {
+      color: var(--primary-color);
+      outline: none;
+    }
+    #side-drawer img {
+      width: 40px;
+      height: 40px;
+      object-fit: cover;
+      border-radius: 6px;
+      box-shadow: 0 0 6px rgba(0,0,0,0.15);
+    }
+    #side-drawer .badge {
+      background-color: var(--accent-color);
+      color: white;
+      border-radius: 15px;
+      padding: 2px 8px;
+      font-size: 10px;
+      margin-left: auto;
+      font-weight: 700;
+      user-select: none;
+    }
+    .drawer-close {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: none;
+      border: none;
+      font-size: 28px;
+      font-weight: 700;
+      cursor: pointer;
+      color: var(--primary-color);
+      user-select: none;
+    }
+    .drawer-close:hover,
+    .drawer-close:focus {
+      color: var(--secondary-color);
+      outline: none;
+    }
+
+    /* TITRE PRINCIPAL */
+    h1 {
+      font-family: 'Fredoka', cursive;
+      font-size: 2.8em;
+      margin: 0 0 30px;
+      color: var(--text-light);
+      text-align: center;
+      text-shadow: 0 0 5px rgba(0,0,0,0.8);
+      user-select: none;
+    }
+
+    /* GRILLE CARTES */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+      gap: 25px;
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto 40px;
+    }
+
+    .card {
+      background-color: var(--card-bg);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.7);
+      color: var(--text-light);
+      transition: transform 0.3s ease;
+      user-select: none;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.85);
+    }
+
+    .card img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .card-content {
+      padding: 15px;
+    }
+
+    .card-content h3 {
+      margin: 0 0 10px;
+      font-weight: 600;
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.3em;
+      color: var(--text-light);
+      text-shadow: 0 0 5px rgba(0,0,0,0.8);
+    }
+
+    .price {
+      color: var(--secondary-color);
+      font-weight: 700;
+      font-size: 1.1em;
+      margin-bottom: 15px;
+    }
+
+    .buy-btn {
+      background-color: var(--secondary-color);
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-weight: 600;
+      font-family: 'Poppins', sans-serif;
+      text-decoration: none;
+      display: inline-block;
+      transition: background-color 0.3s ease;
+      user-select: none;
+    }
+
+    .buy-btn:hover,
+    .buy-btn:focus {
+      background-color: #a60020;
+      outline: none;
+    }
+
+    .back-btn {
+      margin: 0 auto;
+      padding: 12px 30px;
+      background: none;
+      border: 2px solid var(--text-light);
+      color: var(--text-light);
+      border-radius: 30px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: 'Poppins', sans-serif;
+      text-decoration: none;
+      display: block;
+      width: max-content;
+      user-select: none;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    .back-btn:hover,
+    .back-btn:focus {
+      background-color: var(--text-light);
+      color: var(--primary-color);
+      outline: none;
+    }
+
+    /* BOUTON CONTACT FIXE */
+    .btn-contact {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: var(--accent-color);
+      color: white;
+      font-size: 28px;
+      padding: 12px 16px;
+      border-radius: 50%;
+      text-align: center;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      z-index: 1300;
+      cursor: pointer;
+      user-select: none;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+    }
+    .btn-contact:hover,
+    .btn-contact:focus {
+      background-color: #ff3b6f;
+      outline: none;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2em;
+      }
+      .btn-categories {
+        top: 15px;
+        left: 15px;
+        padding: 8px 14px;
+        font-size: 14px;
+      }
+      .grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      .card img {
+        height: 220px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<button class="btn-categories" aria-expanded="false" aria-controls="side-drawer" aria-label="Ouvrir le menu des catégories">
+  ☰ Catégories
+</button>
+
+<aside id="side-drawer" aria-hidden="true" role="navigation" aria-label="Menu catégories">
+  <button class="drawer-close" aria-label="Fermer le menu des catégories">&times;</button>
+  <h2>Catégories</h2>
+  <input type="search" id="search-categories" placeholder="Rechercher une catégorie..." aria-label="Recherche catégories" />
+  <ul id="categories-list">
+    <li data-name="Naruto" data-tag="Nouveau">
+      <a href="naruto.html">
+        <img src="images/naruto1.jpg" alt="Naruto" />
+        <span>Naruto</span>
+        <span class="badge">Nouveau</span>
+      </a>
+    </li>
+    <li data-name="One Piece">
+      <a href="onepiece.html">
+        <img src="images/one.jpg" alt="One Piece" />
+        <span>One Piece</span>
+      </a>
+    </li>
+    <li data-name="Dragon Ball Z" data-tag="Populaire">
+      <a href="dbz.html">
+        <img src="images/dbz.jpg" alt="Dragon Ball Z" />
+        <span>Dragon Ball Z</span>
+        <span class="badge">Populaire</span>
+      </a>
+    </li>
+    <li data-name="Attack on Titan">
+      <a href="aot.html">
+        <img src="images/attack.jpg" alt="Attack on Titan" />
+        <span>Attack on Titan</span>
+      </a>
+    </li>
+    <li data-name="Demon Slayer">
+      <a href="demonslayer.html">
+        <img src="images/demon.jpeg" alt="Demon Slayer" />
+        <span>Demon Slayer</span>
+      </a>
+    </li>
+    <li data-name="Jujutsu Kaisen" data-tag="Tendance">
+      <a href="jujutsu.html">
+        <img src="images/jjk.jpg" alt="Jujutsu Kaisen" />
+        <span>Jujutsu Kaisen</span>
+        <span class="badge">Tendance</span>
+      </a>
+    </li>
+    <li data-name="Autre">
+      <a href="autre.html">
+        <img src="images/porche.jpg" alt="Autres modèles" />
+        <span>🧢 Autre</span>
+      </a>
+    </li>
+    <li data-name="Fille">
+      <a href="fille.html">
+        <img src="images/girl.jpg" alt="Sacs pour filles" />
+        <span>👧 Fille</span>
+      </a>
+    </li>
+    <li data-name="Garçon">
+      <a href="garcon.html">
+        <img src="images/boy.jpg" alt="Sacs de marque" />
+        <span>Garçon</span>
+      </a>
+    </li>
+  </ul>
+</aside>
+
+<header>
+  🎒 Boutique de Sacs à Dos Personnalisés
+</header>
+
+<div class="overlay">
+  <h1>Sacs inspirés de Demon Slayer</h1>
+
+  <div class="grid">
+    <div class="card">
+      <img src="ds1.jpg" alt="Sac DS 1" />
+      <div class="card-content">
+        <h3>Modèle "Tanjiro Kamado"</h3>
+        <p class="price">2600 DA</p>
+        <a class="buy-btn" href="https://m.me/tonpage" target="_blank" rel="noopener noreferrer">Commander</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="ds2.jpg" alt="Sac DS 2" />
+      <div class="card-content">
+        <h3>Modèle "Nezuko"</h3>
+        <p class="price">2700 DA</p>
+        <a class="buy-btn" href="https://m.me/tonpage" target="_blank" rel="noopener noreferrer">Commander</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="ds3.jpg" alt="Sac DS 3" />
+      <div class="card-content">
+        <h3>Modèle "Zenitsu"</h3>
+        <p class="price">2500 DA</p>
+        <a class="buy-btn" href="https://m.me/tonpage" target="_blank" rel="noopener noreferrer">Commander</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="ds4.jpg" alt="Sac DS 4" />
+      <div class="card-content">
+        <h3>Modèle "Inosuke"</h3>
+        <p class="price">2650 DA</p>
+        <a class="buy-btn" href="https://m.me/tonpage" target="_blank" rel="noopener noreferrer">Commander</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="ds5.jpg" alt="Sac DS 5" />
+      <div class="card-content">
+        <h3>Modèle "Giyu Tomioka"</h3>
+        <p class="price">2800 DA</p>
+        <a class="buy-btn" href="https://m.me/tonpage" target="_blank" rel="noopener noreferrer">Commander</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="ds6.jpg" alt="Sac DS 6" />
+      <div class="card-content">
+        <h3>Modèle "Shinobu Kocho"</h3>
+        <p class="price">2900 DA</p>
+        <a class="buy-btn" href="https://m.me/tonpage" target="_blank" rel="noopener noreferrer">Commander</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="ds7.jpg" alt="Sac DS 7" />
+      <div class="card-content">
+        <h3>Modèle "Kyojuro Rengoku"</h3>
+        <p class="price">3000 DA</p>
+        <a class="buy-btn" href="https://m.me/tonpage" target="_blank" rel="noopener noreferrer">Commander</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="ds8.jpg" alt="Sac DS 8" />
+      <div class="card-content">
+        <h3>Modèle "Muzan Kibutsuji"</h3>
+        <p class="price">3100 DA</p>
+        <a class="buy-btn" href="https://m.me/tonpage" target="_blank" rel="noopener noreferrer">Commander</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="ds9.jpg" alt="Sac DS 9" />
+      <div class="card-content">
+        <h3>Modèle "Logo Kimetsu no Yaiba"</h3>
+        <p class="price">2400 DA</p>
+        <a class="buy-btn" href="https://m.me/tonpage" target="_blank" rel="noopener noreferrer">Commander</a>
+      </div>
+    </div>
+  </div>
+
+  <a class="back-btn" href="pc.html">&larr; Retour à la boutique</a>
+</div>
+
+<!-- BOUTON CONTACT FIXE -->
+<a class="btn-contact" href="https://m.me/tonpage" target="_blank" rel="noopener noreferrer" aria-label="Contactez-nous sur Messenger">
+  💬
+</a>
+
+<script>
+  // Gestion ouverture/fermeture menu catégories
+  const btnCategories = document.querySelector('.btn-categories');
+  const sideDrawer = document.getElementById('side-drawer');
+  const btnClose = document.querySelector('.drawer-close');
+  const searchInput = document.getElementById('search-categories');
+  const categoriesList = document.getElementById('categories-list');
+
+  btnCategories.addEventListener('click', () => {
+    const isActive = sideDrawer.classList.toggle('active');
+    btnCategories.setAttribute('aria-expanded', isActive);
+    sideDrawer.setAttribute('aria-hidden', !isActive);
+    if (isActive) searchInput.focus();
+  });
+
+  btnClose.addEventListener('click', () => {
+    sideDrawer.classList.remove('active');
+    btnCategories.setAttribute('aria-expanded', false);
+    sideDrawer.setAttribute('aria-hidden', true);
+  });
+
+  // Filtrer les catégories avec la recherche
+  searchInput.addEventListener('input', () => {
+    const filter = searchInput.value.toLowerCase();
+    const items = categoriesList.querySelectorAll('li');
+    items.forEach(item => {
+      const name = item.getAttribute('data-name').toLowerCase();
+      if (name.includes(filter)) {
+        item.style.display = '';
+      } else {
+        item.style.display = 'none';
+      }
+    });
+  });
+</script>
+
+</body>
+</html>

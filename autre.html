@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Autres Sacs - Sacs à Dos DZ</title>
+  <style>
+    :root {
+      --primary: #111;
+      --secondary: #ff2e63;
+      --bg-overlay: rgba(0, 0, 0, 0.85);
+      --text-light: #fff;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: url('images/porche.jpg') no-repeat center center/cover;
+      color: var(--text-light);
+    }
+
+    .overlay {
+      background-color: var(--bg-overlay);
+      min-height: 100vh;
+      padding: 40px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 2.8em;
+      margin-bottom: 10px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      width: 100%;
+      max-width: 1200px;
+      margin-top: 30px;
+    }
+
+    .card {
+      background-color: #1c1c1c;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+      transition: transform 0.3s;
+    }
+
+    .card:hover {
+      transform: scale(1.03);
+    }
+
+    .card img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+    }
+
+    .card-content {
+      padding: 15px;
+    }
+
+    .card h3 {
+      margin: 0 0 10px;
+      font-size: 1.2em;
+    }
+
+    .price {
+      color: var(--secondary);
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .buy-btn {
+      background-color: var(--secondary);
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 20px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .buy-btn:hover {
+      background-color: #e6004c;
+    }
+
+    .back-btn {
+      margin-top: 30px;
+      background: none;
+      border: 1px solid #fff;
+      color: #fff;
+      padding: 10px 20px;
+      text-decoration: none;
+      border-radius: 20px;
+    }
+
+    .back-btn:hover {
+      background-color: #fff;
+      color: #111;
+    }
+  </style>
+</head>
+<body>
+<div class="overlay">
+  <h1>Autres Modèles de Sacs</h1>
+
+  <div class="grid">
+    <div class="card">
+      <img src="autre1.jpg" alt="Sac Autre 1">
+      <div class="card-content">
+        <h3>Modèle "Style Urban 1"</h3>
+        <p class="price">2500 DA</p>
+        <a class="buy-btn" href="https://m.me/tonpage">Commander</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="autre2.jpg" alt="Sac Autre 2">
+      <div class="card-content">
+        <h3>Modèle "Futur Tech"</h3>
+        <p class="price">2700 DA</p>
+        <a class="buy-btn" href="https://m.me/tonpage">Commander</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="autre3.jpg" alt="Sac Autre 3">
+      <div class="card-content">
+        <h3>Modèle "Skater Street"</h3>
+        <p class="price">2600 DA</p>
+        <a class="buy-btn" href="https://m.me/tonpage">Commander</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="autre4.jpg" alt="Sac Autre 4">
+      <div class="card-content">
+        <h3>Modèle "Classic Graffiti"</h3>
+        <p class="price">2500 DA</p>
+        <a class="buy-btn" href="https://m.me/tonpage">Commander</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="autre5.jpg" alt="Sac Autre 5">
+      <div class="card-content">
+        <h3>Modèle "Retro Style"</h3>
+        <p class="price">2800 DA</p>
+        <a class="buy-btn" href="https://m.me/tonpage">Commander</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="autre6.jpg" alt="Sac Autre 6">
+      <div class="card-content">
+        <h3>Modèle "Galaxy Dream"</h3>
+        <p class="price">2900 DA</p>
+        <a class="buy-btn" href="https://m.me/tonpage">Commander</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="autre7.jpg" alt="Sac Autre 7">
+      <div class="card-content">
+        <h3>Modèle "Sport Runner"</h3>
+        <p class="price">2400 DA</p>
+        <a class="buy-btn" href="https://m.me/tonpage">Commander</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="autre8.jpg" alt="Sac Autre 8">
+      <div class="card-content">
+        <h3>Modèle "Blackout"</h3>
+        <p class="price">3000 DA</p>
+        <a class="buy-btn" href="https://m.me/tonpage">Commander</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="autre9.jpg" alt="Sac Autre 9">
+      <div class="card-content">
+        <h3>Modèle "Graffiti Shock"</h3>
+        <p class="price">2700 DA</p>
+        <a class="buy-btn" href="https://m.me/tonpage">Commander</a>
+      </div>
+    </div>
+  </div>
+
+  <a class="back-btn" href="pc.html">&larr; Retour à la boutique</a>
+</div>
+</body>
+</html>

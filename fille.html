@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Sacs Fille - Sacs à Dos DZ (Catalogue Amélioré)</title>
+    <style>
+        :root{
+            --bg:#0b0d10;
+            --text:#fbfbff;
+            --muted:#9aa6b0;
+            --card:#121418;
+            --accent:#ff79c6; /* rose principal */
+            --accent-2:#ffb6da;
+            --ring: 0 0 0 3px rgba(255,121,198,0.18);
+        }
+
+        /* ===== Reset / Base ===== */
+        *{box-sizing:border-box}
+        html,body{height:100%}
+        body{
+            margin:0;
+            font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+            color:var(--text);
+            background: url('images/girl.jpg') no-repeat center center / cover fixed;
+            -webkit-font-smoothing:antialiased;
+            -moz-osx-font-smoothing:grayscale;
+        }
+
+        .overlay{
+            background: linear-gradient(180deg, rgba(0,0,0,0.60), rgba(0,0,0,0.82));
+            min-height:100vh;
+            padding:16px;
+        }
+
+        /* container: sidebar + main */
+        .container{
+            max-width:1200px;
+            margin:0 auto;
+            display:grid;
+            grid-template-columns: 280px 1fr;
+            gap:20px;
+            align-items:start;
+        }
+
+        /* header */
+        header.site-header{
+            position:sticky;
+            top:0;
+            z-index:60;
+            background: rgba(10,10,15,0.85);
+            backdrop-filter: blur(6px);
+            border-bottom:1px solid rgba(255,255,255,0.04);
+        }
+
+        .header-inner{
+            max-width:1200px;
+            margin:0 auto;
+            padding:14px 12px;
+            display:grid;
+            grid-template-columns:auto 1fr auto;
+            gap:12px;
+            align-items:center;
+        }
+
+        .brand{display:flex; gap:12px; align-items:center}
+        .logo{
+            width:40px; height:40px; border-radius:8px;
+            display:grid; place-items:center; font-weight:900;
+            color:#111; background:var(--accent);
+            font-size:18px;
+        }
+        .brand h1{margin:0; font-size:1.05rem}
+        .brand p{margin:0; color:var(--muted); font-size:.85rem}
+
+        .actions{display:flex; gap:10px; align-items:center}
+        .back-btn, .cart-btn{
+            padding:10px 14px; border-radius:999px;
+            border:1px solid rgba(255,255,255,0.07);
+            background:transparent; color:var(--text); text-decoration:none;
+            display:inline-flex; align-items:center; gap:8px;
+        }
+        .back-btn:hover, .cart-btn:hover{ background: rgba(255,255,255,0.03); }
+
+        /* sidebar filters */
+        aside.filters{
+            background: rgba(12,14,18,0.86);
+            border:1px solid rgba(255,255,255,0.04);
+            border-radius:14px;
+            padding:16px;
+            position:sticky;
+            top:92px;
+            height:fit-content;
+        }
+        .filters h2{margin:0 0 10px 0; font-size:1rem; color:var(--text)}
+        .section{border-top:1px dashed rgba(255,255,255,0.06); padding-top:12px; margin-top:12px}
+        .section:first-of-type{border-top:none; padding-top:0; margin-top:0}
+
+        .searchbar{display:flex; gap:8px}
+        .searchbar input{
+            width:100%; padding:10px 12px; border-radius:10px; border:1px solid rgba(255,255,255,0.06);
+            background:#0a0c10; color:var(--text);
+        }
+
+        .chips{display:flex; gap:8px; flex-wrap:wrap}
+        .chip{
+            padding:6px 10px; border-radius:999px; cursor:pointer;
+            border:1px solid rgba(255,255,255,0.04); background:#091018; color:var(--muted); font-size:.85rem;
+        }
+        .chip.active{box-shadow:var(--ring); border-color:var(--accent); color:#111; background:var(--accent-2)}
+
+        .range-wrap{display:flex; gap:10px; align-items:center}
+        input[type="range"]{width:100%}
+        .range-value{background:#091018; padding:6px 8px; border-radius:8px; color:var(--text); font-weight:700}
+
+        .sort-select{width:100%; padding:10px 12px; border-radius:10px; background:#0a0c10; color:var(--text); border:1px solid rgba(255,255,255,0.04)}
+
+        .btn{display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:8px; border:1px solid rgba(255,255,255,0.06); background:#091018; color:var(--text); cursor:pointer; text-decoration:none}
+        .btn.primary{background:var(--accent); color:#111; border-color:transparent; font-weight:700}
+
+        /* main catalog */
+        main.catalog{
+            background: rgba(9,10,12,0.54);
+            border-radius:14px;
+            border:1px solid rgba(255,255,255,0.04);
+            padding:16px;
+        }
+
+        .grid{display:grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap:16px}
+
+        .card{
+            background:var(--card);
+            border-radius:12px;
+            overflow:hidden;
+            border:1px solid rgba(255,255,255,0.04);
+            transition: transform .25s ease, box-shadow .25s ease;
+            position:relative;
+        }
+        .card:hover{transform: translateY(-6px); box-shadow: 0 16px 40px rgba(0,0,0,0.45)}
+
+        .badge{position:absolute; left:12px; top:12px; background:var(--accent); color:#111; font-weight:800; padding:6px 10px; border-radius:999px; font-size:.75rem}
+
+        .thumb{width:100%; aspect-ratio:4/3; object-fit:cover; display:block}
+        .card-body{padding:12px; display:grid; gap:6px}
+        .title{font-size:1rem; margin:0}
+        .meta{font-size:.85rem; color:var(--muted)}
+        .price{color:var(--accent); font-weight:800; letter-spacing:.2px}
+
+        .row{display:flex; gap:8px; align-items:center; flex-wrap:wrap}
+        .empty{padding:30px; text-align:center; color:var(--muted)}
+
+        /* modal */
+        .modal{position:fixed; inset:0; display:none; place-items:center; background:rgba(0,0,0,0.6); z-index:120; padding:16px}
+        .modal.show{display:grid}
+        .dialog{width:min(920px,96vw); background:#091018; border-radius:12px; border:1px solid rgba(255,255,255,0.04); overflow:hidden; display:grid; grid-template-columns:1.2fr 1fr; min-height:420px}
+        .dialog .media{background:#05060a; display:grid; place-items:center}
+        .dialog img{width:100%; height:100%; object-fit:cover; display:block}
+        .dialog .content{padding:16px; display:grid; gap:10px}
+        .guide{background:#06060a; border:1px solid rgba(255,255,255,0.03); padding:10px; border-radius:8px; color:var(--muted)}
+
+        .close-x{position:absolute; top:10px; right:10px; width:36px; height:36px; border-radius:8px; display:grid; place-items:center; background:#091018; border:1px solid rgba(255,255,255,0.04); cursor:pointer}
+
+        /* utilities */
+        .sr-only{position:absolute; width:1px; height:1px; margin:-1px; padding:0; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0}
+
+        /* responsive */
+        @media (max-width:980px){
+            .container{grid-template-columns:1fr}
+            aside.filters{position:static; order:2}
+            main.catalog{order:1}
+        }
+        @media (max-width:740px){
+            .dialog{grid-template-columns:1fr}
+            .header-inner{grid-template-columns:1fr; gap:8px}
+        }
+
+        /* small card entrance animation */
+        .card{opacity:0; transform:translateY(8px); transition:opacity .6s ease, transform .6s cubic-bezier(.2,.9,.3,1)}
+        .card.visible{opacity:1; transform:translateY(0)}
+    </style>
+</head>
+<body>
+<div class="overlay">
+    <!-- HEADER -->
+    <header class="site-header" role="banner">
+        <div class="header-inner">
+            <div class="brand" aria-label="Sacs à Dos DZ - Fille">
+                <div class="logo" aria-hidden="true">FL</div>
+                <div>
+                    <h1>Sacs inspirés - Collection Fille</h1>
+                    <p class="breadcrumbs"><a href="pc.html">Boutique</a> / <span>Fille</span></p>
+                </div>
+            </div>
+
+            <div></div>
+
+            <div class="actions">
+                <a class="back-btn" href="pc.html" aria-label="Retour à la boutique">← Retour</a>
+                <a class="cart-btn" href="#" aria-label="Voir le panier">Panier (0)</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- LAYOUT: SIDEBAR + MAIN -->
+    <div class="container" role="main">
+        <!-- SIDEBAR FILTERS -->
+        <aside class="filters" aria-label="Filtres du catalogue">
+            <h2>Filtrer & Trier</h2>
+
+            <div class="section">
+                <label for="search" class="sr-only">Rechercher</label>
+                <div class="searchbar">
+                    <input id="search" type="search" placeholder="Rechercher, ex: Licorne, Hello Kitty" autocomplete="off" />
+                </div>
+            </div>
+
+            <div class="section">
+                <h3 style="margin:0 0 8px">Thèmes & Styles</h3>
+                <div class="chips" id="chipTags" aria-label="Choisir des thèmes">
+                    <span class="chip" data-tag="licorne">Licorne</span>
+                    <span class="chip" data-tag="hellokitty">Hello Kitty</span>
+                    <span class="chip" data-tag="arc-en-ciel">Arc-en-ciel</span>
+                    <span class="chip" data-tag="princesse">Princesse</span>
+                    <span class="chip" data-tag="papillon">Papillon</span>
+                    <span class="chip" data-tag="etoiles">Étoiles</span>
+                    <span class="chip" data-tag="floral">Floral</span>
+                    <span class="chip" data-tag="cute-bear">Cute Bear</span>
+                    <span class="chip" data-tag="logo">Logo</span>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3 style="margin:0 0 8px">Budget (DA)</h3>
+                <div class="range-wrap">
+                    <input id="priceRange" type="range" min="2400" max="4200" step="50" value="4200" />
+                    <span class="range-value" id="priceOut">≤ 4200</span>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3 style="margin:0 0 8px">Trier par</h3>
+                <select id="sort" class="sort-select" aria-label="Trier les résultats">
+                    <option value="pop">Recommandés</option>
+                    <option value="price-asc">Prix: du - cher au + cher</option>
+                    <option value="price-desc">Prix: du + cher au - cher</option>
+                    <option value="name">Nom (A→Z)</option>
+                </select>
+            </div>
+
+            <div class="section">
+                <h3 style="margin:0 0 8px">Guide rapide</h3>
+                <p class="muted" style="margin:0 0 8px; color:var(--muted)">Besoin d'aide pour choisir ? Ouvre un sac puis lis les conseils.</p>
+                <button class="btn" id="openGuide">Voir les conseils généraux</button>
+            </div>
+        </aside>
+
+        <!-- CATALOG -->
+        <main class="catalog" aria-live="polite">
+            <div class="grid" id="grid">
+                <!-- Card 1 -->
+                <article class="card" data-name="Licorne Magique" data-price="3600" data-tags="licorne,arc-en-ciel,magique,logo">
+                    <span class="badge">Populaire</span>
+                    <img class="thumb" loading="lazy" src="images/fille1.jpg" alt="Sac Licorne Magique" />
+                    <div class="card-body">
+                        <h3 class="title">Modèle "Licorne Magique"</h3>
+                        <div class="meta">Douce & brillante • 20L</div>
+                        <div class="row"><span class="price">3600 DA</span></div>
+                        <div class="row">
+                            <a class="btn primary" href="https://m.me/tonpage">Commander</a>
+                            <button class="btn quick" data-img="images/fille1.jpg" data-title="Licorne Magique" data-price="3600">Aperçu</button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 2 -->
+                <article class="card" data-name="Hello Kitty Rose" data-price="3500" data-tags="hellokitty,cute,logo">
+                    <img class="thumb" loading="lazy" src="images/fille2.jpg" alt="Sac Hello Kitty Rose" />
+                    <div class="card-body">
+                        <h3 class="title">Modèle "Hello Kitty Rose"</h3>
+                        <div class="meta">Mignon • 19L</div>
+                        <div class="row"><span class="price">3500 DA</span></div>
+                        <div class="row">
+                            <a class="btn primary" href="https://m.me/tonpage">Commander</a>
+                            <button class="btn quick" data-img="images/fille2.jpg" data-title="Hello Kitty Rose" data-price="3500">Aperçu</button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 3 -->
+                <article class="card" data-name="Arc-en-Ciel Doux" data-price="3400" data-tags="arc-en-ciel,coloré,joyeux">
+                    <img class="thumb" loading="lazy" src="images/fille3.jpg" alt="Sac Arc-en-Ciel Doux" />
+                    <div class="card-body">
+                        <h3 class="title">Modèle "Arc-en-Ciel Doux"</h3>
+                        <div class="meta">Coloré • 20L</div>
+                        <div class="row"><span class="price">3400 DA</span></div>
+                        <div class="row">
+                            <a class="btn primary" href="https://m.me/tonpage">Commander</a>
+                            <button class="btn quick" data-img="images/fille3.jpg" data-title="Arc-en-Ciel Doux" data-price="3400">Aperçu</button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 4 -->
+                <article class="card" data-name="Princesse Élégante" data-price="3800" data-tags="princesse,élégant,rose">
+                    <img class="thumb" loading="lazy" src="images/fille4.jpg" alt="Sac Princesse Élégante" />
+                    <div class="card-body">
+                        <h3 class="title">Modèle "Princesse Élégante"</h3>
+                        <div class="meta">Chic • 22L</div>
+                        <div class="row"><span class="price">3800 DA</span></div>
+                        <div class="row">
+                            <a class="btn primary" href="https://m.me/tonpage">Commander</a>
+                            <button class="btn quick" data-img="images/fille4.jpg" data-title="Princesse Élégante" data-price="3800">Aperçu</button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 5 -->
+                <article class="card" data-name="Papillon Pastel" data-price="3300" data-tags="papillon,floral,pastel">
+                    <img class="thumb" loading="lazy" src="images/fille5.jpg" alt="Sac Papillon Pastel" />
+                    <div class="card-body">
+                        <h3 class="title">Modèle "Papillon Pastel"</h3>
+                        <div class="meta">Floral • 18L</div>
+                        <div class="row"><span class="price">3300 DA</span></div>
+                        <div class="row">
+                            <a class="btn primary" href="https://m.me/tonpage">Commander</a>
+                            <button class="btn quick" data-img="images/fille5.jpg" data-title="Papillon Pastel" data-price="3300">Aperçu</button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 6 -->
+                <article class="card" data-name="Étoiles Brillantes" data-price="3200" data-tags="etoiles,brillant,night">
+                    <img class="thumb" loading="lazy" src="images/fille6.jpg" alt="Sac Étoiles Brillantes" />
+                    <div class="card-body">
+                        <h3 class="title">Modèle "Étoiles Brillantes"</h3>
+                        <div class="meta">Lumineux • 19L</div>
+                        <div class="row"><span class="price">3200 DA</span></div>
+                        <div class="row">
+                            <a class="btn primary" href="https://m.me/tonpage">Commander</a>
+                            <button class="btn quick" data-img="images/fille6.jpg" data-title="Étoiles Brillantes" data-price="3200">Aperçu</button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 7 -->
+                <article class="card" data-name="Floral Doux" data-price="3000" data-tags="floral,printemps,rose">
+                    <img class="thumb" loading="lazy" src="images/fille7.jpg" alt="Sac Floral Doux" />
+                    <div class="card-body">
+                        <h3 class="title">Modèle "Floral Doux"</h3>
+                        <div class="meta">Printanier • 18L</div>
+                        <div class="row"><span class="price">3000 DA</span></div>
+                        <div class="row">
+                            <a class="btn primary" href="https://m.me/tonpage">Commander</a>
+                            <button class="btn quick" data-img="images/fille7.jpg" data-title="Floral Doux" data-price="3000">Aperçu</button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 8 -->
+                <article class="card" data-name="Cute Bear" data-price="3700" data-tags="cute-bear,ours,doudou">
+                    <img class="thumb" loading="lazy" src="images/fille8.jpg" alt="Sac Cute Bear" />
+                    <div class="card-body">
+                        <h3 class="title">Modèle "Cute Bear"</h3>
+                        <div class="meta">Doudou • 21L</div>
+                        <div class="row"><span class="price">3700 DA</span></div>
+                        <div class="row">
+                            <a class="btn primary" href="https://m.me/tonpage">Commander</a>
+                            <button class="btn quick" data-img="images/fille8.jpg" data-title="Cute Bear" data-price="3700">Aperçu</button>
+                        </div>
+                    </div>
+                </article>
+
+            </div> <!-- end grid -->
+
+            <div id="empty" class="empty" hidden>Aucun résultat. Essayez d'autres filtres.</div>
+
+            <div style="text-align:center; margin-top:16px">
+                <a class="back-btn" href="pc.html">← Retour à la Boutique</a>
+            </div>
+
+        </main>
+    </div> <!-- end container -->
+
+    <!-- MODAL QUICK VIEW / GUIDE -->
+    <div class="modal" id="modal" aria-hidden="true">
+        <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+            <button class="close-x" id="closeModal" aria-label="Fermer">✕</button>
+
+            <div class="media">
+                <img id="modalImg" src="" alt="Aperçu du sac" />
+            </div>
+
+            <div class="content">
+                <h3 id="modalTitle">Titre du modèle</h3>
+                <div id="modalPrice" class="price">—</div>
+
+                <div class="guide">
+                    <strong>Conseils pour bien choisir</strong>
+                    <ul style="margin:8px 0 0 18px; line-height:1.5">
+                        <li><b>Volume</b>: 18–20L pour l'école/quotidien, 22–24L pour plus de matériel.</li>
+                        <li><b>Confort</b>: bretelles rembourrées et dos respirant pour longues journées.</li>
+                        <li><b>Organisation</b>: poche PC 14–15", petites poches pour clés et câble.</li>
+                        <li><b>Matière</b>: tissu déperlant si tu sors souvent ou voyage.</li>
+                        <li><b>Style</b>: choisis selon tes goûts (Licorne = fantaisie, Floral = doux, Cute Bear = tendre).</li>
+                    </ul>
+                </div>
+
+                <div class="row" style="margin-top:10px">
+                    <a class="btn primary" href="https://m.me/tonpage">Commander ce modèle</a>
+                    <button class="btn" id="close2">Fermer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div> <!-- end overlay -->
+
+<script>
+    // Helpers
+    const $ = (sel, root=document) => root.querySelector(sel);
+    const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
+
+    const state = {
+        term: '',
+        tags: new Set(),
+        maxPrice: 4200,
+        sort: 'pop'
+    };
+
+    const grid = $('#grid');
+    const cards = $$('.card', grid);
+    const empty = $('#empty');
+    const priceRange = $('#priceRange');
+    const priceOut = $('#priceOut');
+    const search = $('#search');
+    const sort = $('#sort');
+
+    // Filter logic
+    function applyFilters(){
+        let visible = 0;
+        const term = state.term.toLowerCase().trim();
+
+        const items = cards.map(card => ({
+            el: card,
+            name: (card.dataset.name || '').toLowerCase(),
+            price: Number(card.dataset.price || '0'),
+            tags: (card.dataset.tags || '').split(',').map(s => s.trim().toLowerCase())
+        }));
+
+        items.forEach(item => {
+            const matchTerm = !term || item.name.includes(term) || item.tags.some(t => t.includes(term));
+            const matchPrice = item.price <= state.maxPrice;
+            const matchTag = state.tags.size === 0 || [...state.tags].every(t => item.tags.includes(t));
+            const show = matchTerm && matchPrice && matchTag;
+            item.el.style.display = show ? '' : 'none';
+            if(show) visible++;
+        });
+
+        const visibleItems = items.filter(i => i.el.style.display !== 'none');
+
+        switch(state.sort){
+            case 'price-asc':
+                visibleItems.sort((a,b) => a.price - b.price); break;
+            case 'price-desc':
+                visibleItems.sort((a,b) => b.price - a.price); break;
+            case 'name':
+                visibleItems.sort((a,b) => a.name.localeCompare(b.name)); break;
+            default:
+                visibleItems.sort((a,b) => cards.indexOf(a.el) - cards.indexOf(b.el));
+        }
+
+        visibleItems.forEach(i => grid.appendChild(i.el));
+        empty.hidden = visible !== 0;
+
+        visibleItems.forEach(i => i.el.classList.add('visible'));
+    }
+
+    // Events
+    if(priceRange){
+        priceRange.addEventListener('input', () => {
+            state.maxPrice = Number(priceRange.value);
+            priceOut.textContent = '\u2264 ' + state.maxPrice;
+            applyFilters();
+        });
+    }
+
+    if(search){
+        search.addEventListener('input', () => {
+            state.term = search.value;
+            applyFilters();
+        });
+    }
+
+    if(sort){
+        sort.addEventListener('change', () => {
+            state.sort = sort.value;
+            applyFilters();
+        });
+    }
+
+    $$('#chipTags .chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+            const tag = (chip.dataset.tag || '').toLowerCase();
+            if(chip.classList.contains('active')){
+                chip.classList.remove('active');
+                state.tags.delete(tag);
+            } else {
+                chip.classList.add('active');
+                state.tags.add(tag);
+            }
+            applyFilters();
+        });
+    });
+
+    // Modal quick view
+    const modal = $('#modal');
+    const modalImg = $('#modalImg');
+    const modalTitle = $('#modalTitle');
+    const modalPrice = $('#modalPrice');
+    const closeModal = $('#closeModal');
+    const close2 = $('#close2');
+
+    function openModal({img, title, price}){
+        modalImg.src = img;
+        modalTitle.textContent = title;
+        modalPrice.textContent = (price === '—' ? '—' : price + ' DA');
+        modal.classList.add('show');
+        modal.setAttribute('aria-hidden','false');
+    }
+
+    function hideModal(){
+        modal.classList.remove('show');
+        modal.setAttribute('aria-hidden','true');
+    }
+
+    $$('.quick').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const data = {
+                img: btn.dataset.img,
+                title: btn.dataset.title,
+                price: btn.dataset.price
+            };
+            openModal(data);
+        });
+    });
+
+    if(closeModal) closeModal.addEventListener('click', hideModal);
+    if(close2) close2.addEventListener('click', hideModal);
+    modal.addEventListener('click', (e) => { if(e.target === modal) hideModal(); });
+    window.addEventListener('keydown', (e) => { if(e.key === 'Escape') hideModal(); });
+
+    // Open guide
+    $('#openGuide').addEventListener('click', () => {
+
+    });
+
+        // Init animations & filters
+        window.addEventListener('load', () => {
+            cards.forEach((c, i) => setTimeout(() => c.classList.add('visible'), 80 * i));
+        });
+
+        applyFilters();
+
+        // accessibility: open quick with Enter on focused card
+        cards.forEach(card => {
+            card.setAttribute('tabindex','0');
+            card.addEventListener('keydown', (e) => {
+                if(e.key === 'Enter'){
+                    const quick = card.querySelector('.quick');
+                    if(quick) quick.click();
+                }
+            });
+        });
+</script>
+</body>
+</html>

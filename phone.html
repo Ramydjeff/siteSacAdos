@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sacs à Dos Personnalisés - Mobile</title>
+
+    <!-- Polices Google -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+    <style>
+        :root {
+            --primary-color: #6c63ff;
+            --secondary-color: #3f3d56;
+            --accent-color: #ff6584;
+            --light-bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text-color: #2d3748;
+            --border-color: rgba(0, 0, 0, 0.08);
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 8px 25px rgba(0, 0, 0, 0.12);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--light-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* HEADER MOBILE */
+        .mobile-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            padding: 15px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+
+        .mobile-header h1 {
+            font-family: 'Fredoka', cursive;
+            font-size: 20px;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        /* BARRE DE RECHERCHE */
+        .search-container {
+            padding: 15px;
+            background: white;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 58px;
+            z-index: 999;
+        }
+
+        .search-box {
+            position: relative;
+            width: 100%;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 45px 12px 15px;
+            border: 2px solid var(--border-color);
+            border-radius: 25px;
+            font-size: 16px;
+            font-family: 'Poppins', sans-serif;
+            background: var(--light-bg);
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            background: white;
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 18px;
+            color: var(--primary-color);
+        }
+
+        /* BANNIÈRE PROMO */
+        .promo-banner {
+            background: linear-gradient(135deg, var(--accent-color), #ff4757);
+            color: white;
+            text-align: center;
+            padding: 12px 15px;
+            margin: 0;
+            font-weight: 600;
+            font-size: 14px;
+            animation: pulse 3s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        /* GRILLE DE CATÉGORIES MOBILE */
+        .categories-grid {
+            padding: 20px 15px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .category-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            text-decoration: none;
+            color: var(--text-color);
+            transition: all 0.3s ease;
+            position: relative;
+            border: 1px solid var(--border-color);
+        }
+
+        .category-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .category-card:active {
+            transform: translateY(0);
+        }
+
+        .card-image {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .category-card:hover .card-image {
+            transform: scale(1.05);
+        }
+
+        .card-content {
+            padding: 12px;
+            text-align: center;
+        }
+
+        .card-title {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--text-color);
+        }
+
+        .card-subtitle {
+            font-size: 12px;
+            color: #718096;
+            font-weight: 400;
+        }
+
+        /* BADGES */
+        .badge {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 4px 8px;
+            border-radius: 12px;
+            color: white;
+            z-index: 2;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge.nouveau {
+            background: var(--accent-color);
+        }
+
+        .badge.populaire {
+            background: var(--secondary-color);
+        }
+
+        .badge.tendance {
+            background: var(--primary-color);
+        }
+
+        /* BOUTON CONTACT FLOTTANT */
+        .contact-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 56px;
+            height: 56px;
+            background: var(--accent-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 24px;
+            color: white;
+            box-shadow: 0 4px 20px rgba(255, 101, 132, 0.4);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .contact-btn:hover {
+            background: #e94f73;
+            transform: scale(1.1);
+        }
+
+        .contact-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* FILTRES RAPIDES */
+        .quick-filters {
+            display: flex;
+            gap: 10px;
+            padding: 15px;
+            overflow-x: auto;
+            background: white;
+            border-bottom: 1px solid var(--border-color);
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .filter-btn {
+            background: var(--light-bg);
+            border: 1px solid var(--border-color);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--text-color);
+            flex-shrink: 0;
+        }
+
+        .filter-btn.active,
+        .filter-btn:hover {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        /* SECTION POPULAIRES */
+        .popular-section {
+            margin: 20px 0;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-color);
+            margin-bottom: 15px;
+            padding: 0 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .popular-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            padding: 0 15px;
+        }
+
+        .mini-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            text-decoration: none;
+            color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+
+        .mini-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .mini-card img {
+            width: 100%;
+            height: 80px;
+            object-fit: cover;
+        }
+
+        .mini-card-title {
+            padding: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        /* ANIMATIONS */
+        .categories-grid .category-card {
+            animation: slideUp 0.6s ease forwards;
+            animation-delay: calc(var(--index, 0) * 0.1s);
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ÉTATS DE CHARGEMENT */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+
+        .no-results {
+            display: none;
+            text-align: center;
+            padding: 40px 20px;
+            color: #718096;
+        }
+
+        .no-results-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+            opacity: 0.5;
+        }
+
+        /* RESPONSIVE POUR TRÈS PETITS ÉCRANS */
+        @media (max-width: 350px) {
+            .categories-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .card-image {
+                height: 180px;
+            }
+
+            .popular-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* AMÉLIORATION DU TOUCH */
+        @media (hover: none) and (pointer: coarse) {
+            .category-card:hover {
+                transform: none;
+            }
+
+            .category-card:active {
+                transform: scale(0.98);
+                transition: transform 0.1s ease;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- HEADER MOBILE -->
+<header class="mobile-header">
+    <h1>🎒 Sacs Perso</h1>
+</header>
+
+<!-- BARRE DE RECHERCHE -->
+<div class="search-container">
+    <div class="search-box">
+        <input
+                type="search"
+                class="search-input"
+                placeholder="Rechercher une catégorie..."
+                id="searchInput"
+        />
+        <span class="search-icon">🔍</span>
+    </div>
+</div>
+
+<!-- BANNIÈRE PROMO -->
+<div class="promo-banner">
+    🌟 Promo rentrée : -20% jusqu'au 15 septembre ! 🌟
+</div>
+
+<!-- FILTRES RAPIDES -->
+<div class="quick-filters">
+    <button class="filter-btn active" data-filter="all">Tout</button>
+    <button class="filter-btn" data-filter="nouveau">Nouveau</button>
+    <button class="filter-btn" data-filter="populaire">Populaire</button>
+    <button class="filter-btn" data-filter="tendance">Tendance</button>
+    <button class="filter-btn" data-filter="anime">Animé</button>
+</div>
+
+<!-- SECTION POPULAIRES -->
+<div class="popular-section">
+    <h2 class="section-title">🔥 Les plus populaires</h2>
+    <div class="popular-grid">
+        <a href="naruto.html" class="mini-card">
+            <img src="images/naruto1.jpg" alt="Naruto" />
+            <div class="mini-card-title">Naruto</div>
+        </a>
+        <a href="dbz.html" class="mini-card">
+            <img src="images/dbz.jpg" alt="Dragon Ball Z" />
+            <div class="mini-card-title">DBZ</div>
+        </a>
+        <a href="jujutsu.html" class="mini-card">
+            <img src="images/jjk.jpg" alt="Jujutsu Kaisen" />
+            <div class="mini-card-title">JJK</div>
+        </a>
+    </div>
+</div>
+
+<!-- GRILLE PRINCIPALE -->
+<main class="categories-grid" id="categoriesGrid">
+    <a href="naruto.html" class="category-card" data-category="naruto anime nouveau" style="--index: 0">
+        <img src="images/naruto1.jpg" alt="Naruto" class="card-image" />
+        <div class="badge nouveau">Nouveau</div>
+        <div class="card-content">
+            <div class="card-title">Naruto</div>
+            <div class="card-subtitle">Sacs ninjas</div>
+        </div>
+    </a>
+
+    <a href="dbz.html" class="category-card" data-category="dbz anime populaire" style="--index: 1">
+        <img src="images/dbz.jpg" alt="Dragon Ball Z" class="card-image" />
+        <div class="badge populaire">Populaire</div>
+        <div class="card-content">
+            <div class="card-title">Dragon Ball Z</div>
+            <div class="card-subtitle">Super Saiyans</div>
+        </div>
+    </a>
+
+    <a href="onepiece.html" class="category-card" data-category="onepiece anime" style="--index: 2">
+        <img src="images/one.jpg" alt="One Piece" class="card-image" />
+        <div class="card-content">
+            <div class="card-title">One Piece</div>
+            <div class="card-subtitle">Pirates</div>
+        </div>
+    </a>
+
+    <a href="aot.html" class="category-card" data-category="aot anime" style="--index: 3">
+        <img src="images/attack.jpg" alt="Attack on Titan" class="card-image" />
+        <div class="card-content">
+            <div class="card-title">Attack on Titan</div>
+            <div class="card-subtitle">Titans</div>
+        </div>
+    </a>
+
+    <a href="demonslayer.html" class="category-card" data-category="demon anime" style="--index: 4">
+        <img src="images/demon.jpeg" alt="Demon Slayer" class="card-image" />
+        <div class="card-content">
+            <div class="card-title">Demon Slayer</div>
+            <div class="card-subtitle">Chasseurs</div>
+        </div>
+    </a>
+
+    <a href="jujutsu.html" class="category-card" data-category="jujutsu anime tendance" style="--index: 5">
+        <img src="images/jjk.jpg" alt="Jujutsu Kaisen" class="card-image" />
+        <div class="badge tendance">Tendance</div>
+        <div class="card-content">
+            <div class="card-title">Jujutsu Kaisen</div>
+            <div class="card-subtitle">Sorciers</div>
+        </div>
+    </a>
+
+    <a href="fille.html" class="category-card" data-category="fille" style="--index: 6">
+        <img src="images/girl.jpg" alt="Sacs pour filles" class="card-image" />
+        <div class="card-content">
+            <div class="card-title">👧 Fille</div>
+            <div class="card-subtitle">Designs féminins</div>
+        </div>
+    </a>
+
+    <a href="garcon.html" class="category-card" data-category="garcon" style="--index: 7">
+        <img src="images/boy.jpg" alt="Sacs pour garçons" class="card-image" />
+        <div class="card-content">
+            <div class="card-title">👦 Garçon</div>
+            <div class="card-subtitle">Styles masculins</div>
+        </div>
+    </a>
+
+    <a href="autre.html" class="category-card" data-category="autre" style="--index: 8">
+        <img src="images/porche.jpg" alt="Autres modèles" class="card-image" />
+        <div class="card-content">
+            <div class="card-title">🧢 Autre</div>
+            <div class="card-subtitle">Modèles variés</div>
+        </div>
+    </a>
+</main>
+
+<!-- ÉTAT AUCUN RÉSULTAT -->
+<div class="no-results" id="noResults">
+    <div class="no-results-icon">🔍</div>
+    <h3>Aucun résultat trouvé</h3>
+    <p>Essayez avec d'autres mots-clés</p>
+</div>
+
+<!-- BOUTON CONTACT -->
+<a href="https://m.me/tonprofilmessenger" class="contact-btn" aria-label="Contacter via Messenger">
+    💬
+</a>
+
+<script>
+    // Éléments DOM
+    const searchInput = document.getElementById('searchInput');
+    const categoriesGrid = document.getElementById('categoriesGrid');
+    const noResults = document.getElementById('noResults');
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const categoryCards = document.querySelectorAll('.category-card');
+
+    let currentFilter = 'all';
+
+    // Recherche en temps réel
+    searchInput.addEventListener('input', (e) => {
+        const searchTerm = e.target.value.toLowerCase().trim();
+        filterCategories(searchTerm, currentFilter);
+    });
+
+    // Filtres rapides
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Mettre à jour l'état actif
+            filterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            currentFilter = btn.dataset.filter;
+            const searchTerm = searchInput.value.toLowerCase().trim();
+            filterCategories(searchTerm, currentFilter);
+
+            // Effet de vibration sur mobile
+            if (navigator.vibrate) {
+                navigator.vibrate(50);
+            }
+        });
+    });
+
+    // Fonction de filtrage
+    function filterCategories(searchTerm, filter) {
+        let visibleCount = 0;
+
+        categoryCards.forEach(card => {
+            const categoryData = card.dataset.category.toLowerCase();
+            const title = card.querySelector('.card-title').textContent.toLowerCase();
+
+            let matchesSearch = !searchTerm ||
+                title.includes(searchTerm) ||
+                categoryData.includes(searchTerm);
+
+            let matchesFilter = filter === 'all' ||
+                categoryData.includes(filter);
+
+            if (matchesSearch && matchesFilter) {
+                card.style.display = '';
+                visibleCount++;
+            } else {
+                card.style.display = 'none';
+            }
+        });
+
+        // Afficher/masquer l'état "aucun résultat"
+        if (visibleCount === 0) {
+            categoriesGrid.style.display = 'none';
+            noResults.style.display = 'block';
+        } else {
+            categoriesGrid.style.display = 'grid';
+            noResults.style.display = 'none';
+        }
+    }
+
+    // Amélioration du scroll sur mobile
+    let isScrolling = false;
+
+    window.addEventListener('scroll', () => {
+        if (!isScrolling) {
+            window.requestAnimationFrame(() => {
+                // Ici on peut ajouter des effets au scroll si nécessaire
+                isScrolling = false;
+            });
+            isScrolling = true;
+        }
+    });
+
+    // Gestion des erreurs d'images
+    document.querySelectorAll('img').forEach(img => {
+        img.addEventListener('error', (e) => {
+            e.target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjBmMGYwIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkltYWdlPC90ZXh0Pjwvc3ZnPg==';
+            e.target.alt = 'Image non disponible';
+        });
+    });
+
+    // Animation d'entrée progressive
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.animation = `slideUp 0.6s ease forwards`;
+            }
+        });
+    }, { threshold: 0.1 });
+
+    categoryCards.forEach(card => {
+        observer.observe(card);
+    });
+
+    // Optimisation pour le tactile
+    document.addEventListener('touchstart', () => {}, { passive: true });
+
+    // Éviter le zoom accidentel
+    let lastTouchEnd = 0;
+    document.addEventListener('touchend', (e) => {
+        const now = new Date().getTime();
+        if (now - lastTouchEnd <= 300) {
+            e.preventDefault();
+        }
+        lastTouchEnd = now;
+    }, false);
+</script>
+</body>
+</html>
